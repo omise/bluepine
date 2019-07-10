@@ -1,0 +1,14 @@
+*.rbc
+*.swp
+.DS_Store
+/.idea
+/.rdoc
+/.rvmrc
+/.envrc
+/TAGS
+/doc
+/misc
+/notes.txt
+/pkg
+/tmp
+/coverage

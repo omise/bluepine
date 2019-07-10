@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "object": {
+      "type": "string",
+      "default": "charge",
+      "pattern": "charge"
+    },
+    "amount": {
+      "type": "integer"
+    },
+    "currency": {
+      "type": "string"
+    }
+  }
+}

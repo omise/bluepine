@@ -1,0 +1,49 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": null,
+    "title": null,
+    "description": null
+  },
+  "servers": [],
+  "paths": {},
+  "components": {
+    "schemas": {
+      "hero": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "stats": {
+            "type": "object",
+            "properties": {
+              "strength": {
+                "type": "number",
+                "default": 0
+              }
+            }
+          },
+          "friends": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/hero"
+            }
+          },
+          "team": {
+            "$ref": "#/components/schemas/team"
+          }
+        }
+      },
+      "team": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "default": "Avengers"
+          }
+        }
+      }
+    }
+  }
+}
