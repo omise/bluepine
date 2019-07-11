@@ -6,7 +6,7 @@ module Bluepine
         @_included_block = block
       else
         base.extend const_get(:ClassMethods) if const_defined?(:ClassMethods)
-        base.class_eval &@_included_block
+        base.class_eval &@_included_block if instance_variable_defined?(:@_included_block)
       end
     end
   end
