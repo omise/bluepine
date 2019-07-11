@@ -21,7 +21,6 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.0.0'
   s.extra_rdoc_files = [ "README.md" ]
 
-  s.add_dependency "activesupport", "~> 5.0"
   s.add_dependency "activemodel", "~> 5.0"
 
   s.add_development_dependency "bundler", "~> 1.17"
