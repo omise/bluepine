@@ -1,7 +1,7 @@
 module Bluepine
   module Validators
     module Validatable
-      extend ActiveSupport::Concern
+      extend Bluepine::Support
 
       included do
         RULES = {}.freeze

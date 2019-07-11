@@ -1,7 +1,7 @@
-require 'active_support/concern'
 require 'active_model'
 
 require "bluepine/version"
+require "bluepine/support"
 require "bluepine/functions"
 require "bluepine/assertions"
 require "bluepine/error"

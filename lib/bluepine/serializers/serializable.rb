@@ -1,24 +1,22 @@
 module Bluepine
   module Serializers
     module Serializable
-      extend ActiveSupport::Concern
+      extend Bluepine::Support
 
       included do
-        # Serializer
-        class_attribute :serializer
+        class << self
+          attr_accessor :serializer
 
-        # Default serializer
+          def serializer
+            @serializer || superclass.serializer
+          end
+        end
+
         self.serializer = ->(v) { v }
       end
 
       def serialize(value)
-        self.class.serialize(value)
-      end
-
-      module ClassMethods
-        def serialize(value)
-          serializer.(value)
-        end
+        self.class.serializer.(value)
       end
     end
   end
