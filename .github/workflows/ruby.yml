@@ -4,7 +4,6 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -17,7 +16,6 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby }}
         architecture: 'x64'
-    - run: ruby hello.rb
 
     - name: Build and test with Rake
       run: |
