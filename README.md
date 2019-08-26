@@ -1,6 +1,6 @@
 # Bluepine
 
-<img alt="GitHub Actions status" src="https://github.com/omise/bluepine/workflows/ruby/badge.svg">
+<img alt="GitHub Actions status" src="https://github.com/omise/bluepine/workflows/Ruby/badge.svg">
 
 `Bluepine` is a DSL for defining API [Schema](#schema)/[Endpoint](#endpoint) with the capabilities to generate `Open API (v3)` spec (other specs is coming soon), validate API request and serialize object for API response based on single schema definition.
 
