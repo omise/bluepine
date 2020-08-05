@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "activemodel", ">= 5.0", "< 6.1"
 
+  s.add_development_dependency "gem-release", "~> 2.1"
   s.add_development_dependency "bundler", "~> 2.0"
   s.add_development_dependency "rake", "~> 12.0"
   s.add_development_dependency "minitest", "~> 5.0"
