@@ -9,8 +9,8 @@ module Bluepine
       self.stacks = []
 
       def initialize(name, options = {}, &block)
-        @name       = name
-        @options    = options
+        super
+
         @attributes = {}
         instance_exec(&block) if block_given?
       end

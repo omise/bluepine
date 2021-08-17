@@ -69,6 +69,7 @@ class Bluepine::Attributes::ObjectAttributeTest < BaseAttribute
           end
 
           assert_equal :deleted_1, attr[:name_1].if
+          assert_equal :deleted_1, attr[:nested].if
           assert_equal :deleted_2, attr[:nested][:name_2].if
           assert_nil attr[:kitten].if
         end
