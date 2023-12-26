@@ -205,7 +205,7 @@ Or install it yourself as:
 
 ## Attributes
 
-`Attribute` is just a simple class that doesn't have any functionality/logic on its own. With this design, it decouples the logic to `validate`, `serialize`, etc from `Attribute` and lets consumers (e.g. `Validator`, `Serializer`, etc) decide it instead. 
+`Attribute` is just a simple class that doesn't have any functionality/logic on its own. With this design, it decouples the logic to `validate`, `serialize`, etc from `Attribute` and lets consumers (e.g. `Validator`, `Serializer`, etc) decide the logic instead. 
 
 Here are the pre-defined attributes that we can use.
 
@@ -220,10 +220,10 @@ Here are the pre-defined attributes that we can use.
 
 ### Creating an attribute
 
-There are a multiple ways to create attributes. We can create it manually or by using some other methods.
+There are a multiple ways to create attributes. We can create it manually or by using other methods.
 
 #### Manually creating an attribute
-Thje following example creates an attribute manually.
+The following example creates an attribute manually.
 
 ```ruby
 user_schema = Bluepine::Attributes::ObjectAttribute.new(:user) do
@@ -327,18 +327,18 @@ All attributes have a common set of options.
 | Name | type | Description | Serializer | Validator | Open API 
 |-|-|-|-|-|-|
 | name | `string\|symbol` | Attribute's name e.g. `email` |
-| [method](#method-options) | `symbol` | When attribute's `name` differs from target's `name`, we can use this to specify a method that will be used to get the value for the attribute. | read value from specified name instead. See [Serializer `:method`](#serializer-options-method). | | |
-| [match](#match-options) | `Regexp` | `Regex` that will be used to validate the attribute's value (`string` attribute) | | validates string based on given `Regexp` | Will add `Regexp` to generated `pattern` property |
+| [method](#method-options) | `symbol` | When attribute's `name` differs from target's `name`, we can use this to specify a method that will be used to get the value for the attribute. | Read value from specified name instead. See [Serializer `:method`](#serializer-options-method). | | |
+| [match](#match-options) | `Regexp` | `Regex` that will be used to validate the attribute's value (`string` attribute) | | Validates string based on given `Regexp` | Will add `Regexp` to generated `pattern` property |
 | type | `string` | Data type | Attribute's type e.g. `string`, `schema` etc
 | native_type | `string` | JSON's data type |
-| [format](#format-options) | `string\|symbol ` | describes the format of this value. Could be arbitary value e.g. `int64`, `email` etc. | | | This'll be added to `format` property |
-| [of](#of-options) | `symbol ` | specifies what type of data will be represented in `array`. The value could be attribute type e.g. `:string` or other schema e.g. `:user` | serializes data using specified value. See [Serializer `:of`](#serializer-options-of)| validates data using specified value | Create a `$ref` type schema |
-| [in](#in-options) | `array` | A set of valid options e.g. `%w[thb usd ...]` | | payload value must be in this list | adds to `enum` property |
-| [if/unless](#if-options) | `symbol\|proc` | Conditional validating/serializing result | serializes only when the specified value evalulates to `true`. See [Serializer `:if/:unless`](#serializer-options-if-unless) | validates only when it evalulates to `true` |
-| required | `boolean` | Indicates this attribute is required (for validation). Default is `false` | | makes it mandatory | adds to `required` list |
-| default | `any` | Default value for attribute | uses as default value when target's value is `nil` | populates as default value when it's not defined in payload | adds to `default` property |
-| private | `boolean` | marks it as `private`. Default is `false` | Excludes this attribute from serialized value |
-| deprecated | `boolean` | marks this attribute as deprecated. Default is `false` | | | adds to `deprecated` property |
+| [format](#format-options) | `string\|symbol ` | Describes the format of this value. Could be arbitary value e.g. `int64`, `email` etc. | | | This will be added to the `format` property |
+| [of](#of-options) | `symbol ` | Specifies the type of data that will be represented in an `array`. The value could be attribute type e.g. `:string` or other schema e.g. `:user` | Serializes data using specified value. See [Serializer `:of`](#serializer-options-of)| Validates data using specified value | Create a `$ref` type schema |
+| [in](#in-options) | `array` | A set of valid options e.g. `%w[thb usd ...]` | | Payload value must be in this list | Adds to `enum` property |
+| [if/unless](#if-options) | `symbol\|proc` | Conditional validating/serializing result | Serializes only when the specified value evalulates to `true`. See [Serializer `:if/:unless`](#serializer-options-if-unless) | Validates only when it evalulates to `true` |
+| required | `boolean` | Indicates this attribute is required (for validation). Default is `false` | | Makes it mandatory | Adds to `required` list |
+| default | `any` | Default value for attribute | Uses as default value when target's value is `nil` | Populates as default value when it is not defined in payload | Adds to `default` property |
+| private | `boolean` | Marks it as `private`. Default is `false` | Excludes this attribute from serialized value |
+| deprecated | `boolean` | Marks this attribute as deprecated. Default is `false` | | | Adds to `deprecated` property |
 | description | `string` | Description of attribute |
 | spec | `string` | Specification of the value (for referencing only) |
 | spec_uri | `string` | URI of `spec` |
@@ -383,7 +383,7 @@ resolver.schemas.register(:user, user_schema)
 
 ### Automatically registering schema/endpoint
 
-Manually creating and registering a schema becomes tedious when there are many schemas/endpoints to work with. The following example demonstrates how to automatically register a schema/endpoint.
+Manually creating and registering a schema becomes tedious when there are many schemas and endpoints to work with. The following example demonstrates how to automatically register a schema/endpoint.
 
 ```ruby
 resolver = Bluepine::Resolver.new do
@@ -564,7 +564,7 @@ will exclude `secret_power` from the result:
 }
 ```
 
-### Conditional Serialization
+### Conditional serialization
 #### <a name="serializer-options-private"></a> `:if/:unless`
 
 *Possible value: `Symbol`/`Proc`*
@@ -575,7 +575,7 @@ Serializes the value based on `if/unless` conditions.
 schema :hero do
   string :name
 
-  # :mode'll get serialized only when `dog_dead` is true
+  # :mode will get serialized only when `dog_dead` is true
   string :mode, if: :dog_dead
 
   # or we can use `Proc` e.g.
@@ -607,7 +607,7 @@ However, if we set `dog_dead: true`, the result will include `mode` value.
 
 ### Custom serializer
 
-By default, each primitive types e.g. `string`, `integer`, etc. has its own serializer. We can override it by overriding the `.serializer` class method.
+By default, each primitive type e.g. `string`, `integer`, etc. has its own serializer. We can override it by overriding the `.serializer` class method.
 
 For example. to extend the `boolean` attribute to treat "**on**" as a valid boolean value, use the following code.
 
@@ -661,7 +661,7 @@ end
 
 ### <a name="endpoint-method"></a> method
 
-Endpoint provides a set of http methods such as `get`, `post`, `patch`, `delete`, etc.
+Endpoint provides a set of HTTP methods such as `get`, `post`, `patch`, `delete`, etc.
 Each method expects a name and some other options.
 
 > Note that the name must be unique within an endpoint.
@@ -718,7 +718,7 @@ post :create, path: "/", params: true
 
 #### Using subset of default params' attributes `params: %i[...]`
 
-Assume that we want to use only some of the default params' attrbiutes, e.g. `currency` (but not other attributes). We can specify it as follows.
+Assume that we want to use only some of the default params' attrbutes, e.g. `currency` (but not other attributes). We can specify it as follows.
 
 ```ruby
 patch :update, path: "/:id", params: %i[currency]
@@ -728,7 +728,7 @@ In this case, it will use only `currency` attribute for validation.
 
 #### Excluding some of default params' attributes `exclude: true`
 
-Let's say the `update` method doesn't need the `amount` attribute from the `default params`' (but still want to use all other attributes). We can specify it as follows.
+Let's say the `update` method doesn't need the `amount` attribute from the `default params` (but still want to use all other attributes). We can specify it as follows.
 
 ```ruby
 patch :update, path: "/:id", params: %i[amount], exclude: true
@@ -746,7 +746,7 @@ patch :update, path: "/:id", params: lambda {
 }
 ```
 
-The new params are then used for validating/generating specs.
+The new params are then used for validating and generating specs.
 
 #### Re-using params from other service `params: Symbol`
 
@@ -854,7 +854,7 @@ hero = Hero.new
 validator.validate(hero_schema, hero) # => Result.errors
 ```
 
-will return
+will return:
 
 ```ruby
 {
