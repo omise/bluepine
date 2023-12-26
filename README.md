@@ -2,9 +2,9 @@
 
 <img alt="GitHub Actions status" src="https://github.com/omise/bluepine/workflows/Ruby/badge.svg">
 
-`Bluepine` is a DSL for defining API [Schema](#schema)/[Endpoint](#endpoint) with the capabilities to generate `Open API (v3)` spec (other specs is coming soon), validate API request and serialize object for API response based on single schema definition.
+`Bluepine` is a DSL for defining API [Schema](#schema)/[Endpoint](#endpoint) with the capabilities to generate the `Open API (v3)` spec (other specs are coming soon), validate API requests and serialize objects for API response based on single schema definition.
 
-## Table of Contents
+## Table of contents
 
 - [Quick Start](#quick-start)
   - [Defining a Schema](#defining-a-schema)
@@ -35,13 +35,13 @@
   - [Open API (v3)](#open-api-v3)
 
 
-## Quick Start
+## Quick start
 
 ### Defining a schema
 
-Let's start by creating a simple schema. (For a complete list of attributes and its options please see [Attributes](#attributes) section)
+Let's start by creating a simple schema. (For a complete list of attributes and their options, please see the [Attributes](#attributes) section.)
 
-> A schema can be created and registered separately, or we can use `Resolver` to create and register in one step.
+> We can create and register a schema as two seperate steps, or we can use `Resolver` to create and register in one step.
 
 ```ruby
 require "bluepine"
@@ -74,7 +74,7 @@ end
 
 ### Serializing schema
 
-In order to serialize schema, we just pass schema defined in previous step to `Serializer`.
+To serialize schema, just pass the schema defined in the previous step to `Serializer`.
 
 > The object to be serialized can be a `Hash` or any `Object` with method/accessor.
 
@@ -101,7 +101,7 @@ serializer = Bluepine::Serializer.new(resolver)
 serializer.serialize(hero_schema, hero)
 ```
 
-will produce the following result
+will produce the following result:
 
 ```ruby
 {
@@ -117,11 +117,11 @@ will produce the following result
   }
 }
 ```
-> Note: It converts number to string (via `Attribute.serializer`) and automatically adds missing fields and default value
+> Note: It converts number to string (via `Attribute.serializer`) and automatically adds missing fields and default value:
 
 ### Validating data
 
-To validate data against defined schema. We just pass it to `Validator#validate` method.
+To validate data against defined schema. pass the data to the `Validator#validate` method.
 
 > The payload could be a `Hash` or any `Object`.
 
@@ -141,9 +141,9 @@ validator = Bluepine::Validator.new(resolver)
 validator.validate(user_schema, payload) # => Result
 ```
 
-It'll return `Result` object which has 2 attributes `#value` and `#errors`.
+This method returns a `Result` object that has 2 attributes `#value` and `#errors`.
 
-In the case of errors, `#errors` will contain all error messages
+In the case of errors, `#errors` will contain all error messages:
 
 ```ruby
 # Result.errors =>
@@ -159,7 +159,7 @@ In the case of errors, `#errors` will contain all error messages
 }
 ```
 
-If there's no errors, `#value` will contain normalized data.
+If there are no errors, `#value` will contain normalized data.
 
 ```ruby
 # Result.value =>
@@ -182,7 +182,7 @@ If there's no errors, `#value` will contain normalized data.
 }
 ```
 
-> All default values will be added automatically.
+> All the default values will be added automatically.
 
 ### Generating Open API (v3)
 
@@ -205,9 +205,9 @@ Or install it yourself as:
 
 ## Attributes
 
-`Attribute` is just a simple class which doesn't have any functionality/logic on its own. With this design, it decouples the logics to `validate`, `serialize`, etc from `Attribute` and let's consumers (e.g. `Validator`, `Serializer`, etc) decide it instead. 
+`Attribute` is just a simple class that doesn't have any functionality/logic on its own. With this design, it decouples the logic to `validate`, `serialize`, etc from `Attribute` and lets consumers (e.g. `Validator`, `Serializer`, etc) decide it instead. 
 
-Here're pre-defined attributes that we can use.
+Here are the pre-defined attributes that we can use.
 
 * `string` - StringAttribute
 * `boolean` - BooleanAttribute
@@ -218,12 +218,12 @@ Here're pre-defined attributes that we can use.
 * `object` - [ObjectAttribute](#object-attribute)
 * `schema` - [SchemaAttribute](#schema-attribute)
 
-### Creating Attribute
+### Creating an attribute
 
-There're couple of ways to create attributes. We can create it manually or using some other methods.
+There are a multiple ways to create attributes. We can create it manually or by using some other methods.
 
-#### Manually Creating Attribute
-Here, we're creating it manually.
+#### Manually creating an attribute
+Thje following example creates an attribute manually.
 
 ```ruby
 user_schema = Bluepine::Attributes::ObjectAttribute.new(:user) do
@@ -234,7 +234,7 @@ end
 
 #### Using `Attributes.create`
 
-This is equivalent to the above code
+This is equivalent to the code mentioned previously.
 
 ```ruby
 Bluepine::Attributes.create(:object, :user) do
@@ -245,7 +245,7 @@ end
 
 #### Using `Resolver`
 
-This is probably the easiest way to create object attribute. Since it also keeps track of the created attribute for you. (So, we don't have to register it by ourself. See also [Resolver](#resolver))
+This is probably the easiest way to create an object attribute. This method keeps track of the created attribute for you, and you don't have to register it manually. See also [Resolver](#resolver))
 
 ```ruby
 Bluepine::Resolver.new do
@@ -256,11 +256,11 @@ Bluepine::Resolver.new do
 end
 ```
 
-### Array Attribute
+### Array attribute
 
-Array attribute supports an option named `:of` which we can use to describe what kind of data can be contained inside `array`.
+Array attribute supports an option named `:of` that we can use to describe the kind of data that can be contained inside an `array`.
 
-For example
+For example:
 
 ```ruby
 schema :user do
@@ -278,9 +278,9 @@ schema :user do
 end
 ```
 
-### Object Attribute
+### Object attribute
 
-Most of the time, we'll be working with this attribute more often. 
+Most of the time, we'll be working with this attribute. 
 
 ```ruby
 schema :user do
@@ -298,11 +298,11 @@ schema :user do
 end
 ```
 
-### Schema Attribute
+### Schema attribute
 
-Instead of declaring a lot of nested object. We can also use `schema` attribute to refer to other previously defined schema (DRY).
+Instead of declaring many nested objects. we can use the `schema` attribute to refer to other previously defined schema (DRY).
 
-It also accepts `:of` option. (it works the same as `Array`)
+The Schema attribute also accepts the `:of` option. (it works the same as `Array`)
 
 ```ruby
 schema :hero do
@@ -311,7 +311,7 @@ schema :hero do
   # This implies `of: :team`
   schema :team
 
-  # If the field name is different, we can specify `:of` option (which work the same way as `Array`)
+  # If the field name is different, we can specify `:of` option (that works the same way as `Array`)
   schema :awesome_team, of: :team
 end
 
@@ -320,9 +320,9 @@ schema :team do
 end
 ```
 
-### Attribute Options
+### Attribute options
 
-All attributes have common set of options avaiable
+All attributes have a common set of options.
 
 | Name | type | Description | Serializer | Validator | Open API 
 |-|-|-|-|-|-|
@@ -343,9 +343,9 @@ All attributes have common set of options avaiable
 | spec | `string` | Specification of the value (for referencing only) |
 | spec_uri | `string` | URI of `spec` |
 
-### Custom Attribute
+### Custom attribute
 
-If you want to add your own custom attribute. Simply create a new class and make it extends from `Attribute` and then register it to `Attributes` registry.
+To add your custom attribute. create a new class, make it extend from `Attribute`, and then register it with the `Attributes` registry.
 
 ```ruby
 class AwesomeAttribute < Bluepine::Attributes::Attribute
@@ -356,7 +356,7 @@ end
 Bluepine::Attributes.register(:awesome, AwesomeAttribute)
 ```
 
-Later, we can refer to it like the following.
+Later, we can refer to it as follows.
 
 ```ruby
 schema :user do
@@ -367,7 +367,7 @@ end
 
 ## Resolver
 
-`Resolver` acts as a registry that holds references to all `schemas` and `endpoints` that we've defined.
+`Resolver` acts as a registry that holds the references to all `schemas` and `endpoints` that we have defined.
 
 ### Manually registering schema/endpoint
 
@@ -383,7 +383,7 @@ resolver.schemas.register(:user, user_schema)
 
 ### Automatically registering schema/endpoint
 
-Although we can create a schema and register it manually. It'll become a tedious tasks when there're lot of schemas/endpoints to work with.
+Manually creating and registering a schema becomes tedious when there are many schemas/endpoints to work with. The following example demonstrates how to automatically register a schema/endpoint.
 
 ```ruby
 resolver = Bluepine::Resolver.new do
@@ -405,7 +405,7 @@ end
 
 ## Serialization
 
-`Serializer` was designed in the way that it can serialize any type of `Attribute`. Either it's simple attribute type such as `StringAttribute` or a more complex type like `ObjectAttribute`. The `Serializer` treats it the same way.
+`Serializer` was designed to serialize any type of `Attribute` - both a simple attribute type such as `StringAttribute` or a more complex type such as `ObjectAttribute`. The `Serializer` treats both types alike.
 
 ### <a name="serializer-example"></a> Example
 #### Serializing a simple type
@@ -426,9 +426,9 @@ serializer.serialize(attr, ["Iron Man", "Thor"]) # => ["Iron Man", "Thor"]
 
 #### Serializing `Object`
 
-When serializing object, the data that we want to serialize can be a `Hash` or plain `Object`.
+When serializing an object, the data that we want to serialize can either be a `Hash` or a plain `Object`.
 
-In the following example. We serialize an instance of `Hero` class.
+In the following example. we serialize an instance of the `Hero` class.
 
 ```ruby
 attr = Bluepine::Attributes.create(:object, :hero) do
@@ -466,7 +466,7 @@ serializer.serialize(attr, thor) # =>
 
 *Value: Symbol* - Alternative method name
 
-We can use this option to specify which method of the target object that will be used to get the data from.
+Use this option to specify the method of the target object from which to get the data.
 
 ```ruby
 # Our schema
@@ -501,9 +501,9 @@ will produce the following result.
 
 *Value: `Symbol`* - Attribute type or Schema name e.g. `:string` or `:user`
 
-This option allows us to refer to other schema from `array` or `schema` attribute.
+This option allows us to refer to other schema from the `array` or `schema` attribute.
 
-In the following example. We'll re-use our previously defined `:hero` schema with our new `:team` schema.
+In the following example. we re-use our previously defined `:hero` schema with our new `:team` schema.
 
 ```ruby
 schema :team do
@@ -528,7 +528,7 @@ team = Team.new(name: "Avengers", heroes: [
 serializer.serialize(team_schema, team)
 ```
 
-will produce the following result
+The result is as follows:
 
 ```ruby
 {
@@ -544,7 +544,7 @@ will produce the following result
 
 *Value: `Boolean`* - Default is `false`
 
-When it's set to `true`. It'll exclude that attribute from serializer's result.
+Set this to `true` to exclude that attribute from the serializer's result.
 
 ```ruby
 schema :hero do
@@ -556,7 +556,7 @@ hero = Hero.new(name: "Peter", secret_power: 99)
 serializer.serialize(hero_schema, hero)
 ```
 
-will exclude `secret_power` from result
+will exclude `secret_power` from the result:
 
 ```ruby
 {
@@ -569,7 +569,7 @@ will exclude `secret_power` from result
 
 *Possible value: `Symbol`/`Proc`*
 
-This enables us to serialize value based on `if/unless` conditions.
+Serializes the value based on `if/unless` conditions.
 
 ```ruby
 schema :hero do
@@ -587,7 +587,7 @@ hero = Hero.new(name: "John Wick", mode: "Angry")
 serializer.serialize(hero_schema, hero) # =>
 ```
 
-will produce
+will produce:
 
 ```ruby
 {
@@ -595,7 +595,7 @@ will produce
   dog_dead: false
 }
 ```
-But if we set `dog_dead: true` the result will include `mode` value.
+However, if we set `dog_dead: true`, the result will include `mode` value.
 
 ```ruby
 {
@@ -605,11 +605,11 @@ But if we set `dog_dead: true` the result will include `mode` value.
 }
 ```
 
-### Custom Serializer
+### Custom serializer
 
-By default, each primitive types e.g. `string`, `integer`, etc. has its own serializer. We can override it by overriding `.serializer` class method.
+By default, each primitive types e.g. `string`, `integer`, etc. has its own serializer. We can override it by overriding the `.serializer` class method.
 
-For example. If we want to extend `boolean` attribute to treat "**on**" as a valid boolean value. We could do it like this.
+For example. to extend the `boolean` attribute to treat "**on**" as a valid boolean value, use the following code.
 
 ```ruby
 BooleanAttribute.normalize = ->(x) { ["on", true].include?(x) ? true : false }
@@ -623,7 +623,7 @@ team = Team.new(active: "on")
 serializer.serialize(team_schema, team)
 ```
 
-will produce
+Result:
 
 ```ruby
 {
@@ -633,12 +633,11 @@ will produce
 
 ## Endpoint
 
-Endpoint represents the API endpoint and it's operations e.g. `GET`, `POST`, etc.
-It groups resource's related operations together and defines a set of valid parameters that the endpoint accepts.
+Endpoint represents the API endpoint and its operations e.g. `GET`, `POST`, etc. Related operations for a resource are grouped together along with a set of valid parameters that the endpoint accepts.
 
-### Defining Endpoint
+### Defining endpoint
 
-We could define it manually as follows
+We could define it manually as follows:
 
 ```ruby
 Bluepine::Endpoint.new "/users" do
@@ -646,7 +645,7 @@ Bluepine::Endpoint.new "/users" do
 end
 ```
 
-or defines it via `Resolver`
+or define it via `Resolver`:
 
 ```ruby
 Bluepine::Resolver.new do
@@ -660,12 +659,12 @@ Bluepine::Resolver.new do
 end
 ```
 
-### <a name="endpoint-method"></a> Method
+### <a name="endpoint-method"></a> method
 
 Endpoint provides a set of http methods such as `get`, `post`, `patch`, `delete`, etc.
 Each method expects a name and some other options.
 
-> Note that name must be unique within endpoint
+> Note that the name must be unique within an endpoint.
 
 ```ruby
 method(name, path:, params:)
@@ -675,11 +674,11 @@ get  :read,   path: "/:id"
 post :create, path: "/"
 ```
 
-### <a name="endpoint-params"></a> Params
+### <a name="endpoint-params"></a> params
 
-`Params` allows us to define a set of valid parameters accepted by the Endpoint's methods (e.g. `get`, `post`, etc).
+`Params` help define a set of valid parameters accepted by the Endpoint's methods (e.g. `get`, `post`, etc).
 
-We can think of `Params` the same way as `Schema` (i.e. `ObjectAttribute`). It's just a specialize version of `ObjectAttribute`.
+We can think of `Params` the same way as `Schema` (i.e. `ObjectAttribute`). They are just a specialized version of `ObjectAttribute`.
 
 #### Defining default params
 
@@ -691,17 +690,17 @@ endpoint "/users" do
     string :password
   end
 
-  # `params: true` will use default params for validating incoming request
+  # `params: true` will use default params for validating incoming requests
   post  :create, params: true
 
-  # this will re-use `username` param from default params
+  # this will re-use the `username` param from default params
   patch :update, params: %i[username]
 end
 ```
 
 #### Using no params `params: false` (default behaviour)
 
-If we don't want our endpoint's method to re-use default params. We can specify `params: false` to endpoint method's arguments.
+If we don't want our endpoint's method to use default params, we can specify `params: false` in the endpoint method's arguments.
 
 > Note: this is the default behaviour. So we can leave it blank.
 
@@ -711,25 +710,25 @@ get :index, path: "/" # ignore `params` means `params: false`
 
 #### Using default params `params: true`
 
-As we've seen in the example above. Set `params: true` indicates that we want to use default params for this method.
+As we've seen in the previous example, `params: true` indicates that we want to use default params for this method.
 
 ```ruby
 post :create, path: "/", params: true
 ```
 
-#### Using subset of default params's attributes `params: %i[...]`
+#### Using subset of default params' attributes `params: %i[...]`
 
-Let's say we want to use only some of default params's attrbiute e.g. `currency` (but not other attributes). We can specify it like this.
+Assume that we want to use only some of the default params' attrbiutes, e.g. `currency` (but not other attributes). We can specify it as follows.
 
 ```ruby
 patch :update, path: "/:id", params: %i[currency]
 ```
 
-In this case it will re-use only `currency` attribute for validation.
+In this case, it will use only `currency` attribute for validation.
 
-#### Excluding some of default params's attributes `exclude: true`
+#### Excluding some of default params' attributes `exclude: true`
 
-Let's say the `update` method doesn't need the `default params`'s `amount` attribute (but still want to use all other attributes). We can specify it as follows.
+Let's say the `update` method doesn't need the `amount` attribute from the `default params`' (but still want to use all other attributes). We can specify it as follows.
 
 ```ruby
 patch :update, path: "/:id", params: %i[amount], exclude: true
@@ -737,7 +736,7 @@ patch :update, path: "/:id", params: %i[amount], exclude: true
 
 #### Overriding default params with `params: Proc`
 
-In the case where we want to completely use the new set of params. We can use `Proc` to define it like the following.
+To completely use a new set of params, use `Proc` to define them as follows.
 
 ```ruby
 # inside schema.endpoint block
@@ -747,11 +746,11 @@ patch :update, path: "/:id", params: lambda {
 }
 ```
 
-It will use these new params for validating/generating specs.
+The new params are then used for validating/generating specs.
 
-#### Re-using Params from Other Service `params: Symbol`
+#### Re-using params from other service `params: Symbol`
 
-We can also re-use params from other endpoint by specifing a `Symbol` that refers to other endpoint's params.
+We can also re-use params from other endpoints by specifing a `Symbol` that refers to the params of the other endpoint.
 
 ```ruby
 endpoint "/search" do
@@ -766,17 +765,17 @@ endpoint "/blogs" do
 end
 ```
 
-Here we will use `search` endpoint's default params for validating `GET /users` endpoint.
+The default params of the `search` endpoint are now used for validating the `GET /users` endpoint.
 
-### Endpoint Validation
+### Endpoint validation
 
 See [Validation - Validating Endpoint](#validating-endpoint)
 
 ## Validation
 
-Once we have our schema/endpoint defined. We can use validator to validate it against any data. (it uses `ActiveModel::Validations` under the hood)
+Once we have our schema/endpoint defined, we can use the validator to validate it against any data. (it uses `ActiveModel::Validations` under the hood)
 
-Similar to `Serializer`. We can use `Validator` to validate any type of `Attribute`.
+Similar to `Serializer`, we can use `Validator` to validate any type of `Attribute`.
 
 ### Example
 #### Validating simple attribute
@@ -788,7 +787,7 @@ email = true
 validator.validate(attr, email) # => Result object
 ```
 
-In this case, it'll just return a `Result.errors` which contain error message
+In this case, it will just return a `Result.errors` that contains an error message.
 
 ```ruby
 ["is not string"]
@@ -803,7 +802,7 @@ names = ["john", 1, "doe"]
 validator.validate(attr, names) # => Result object
 ```
 
-It'll return the error messages at exact index position.
+It will return the error messages at the exact index position.
 
 ```ruby
 {
@@ -812,7 +811,8 @@ It'll return the error messages at exact index position.
 ```
 
 #### Validating `Object`
-Most of the time, we'll work with the object type (instead of simple type like `string`, etc).
+Most of the time, we'll work with the object type (instead of simple type such as `string`, etc).
+
 ```ruby
 attr  = Bluepine::Attributes.create(:object, :user) do
   string :username, min: 4
@@ -826,7 +826,7 @@ user = {
 
 validator.validate(attr, user) # => Result object
 ```
-Since it's an object, the errors will contain attribute names
+Since it is an object, the errors will contain attribute names:
 
 ```ruby
 {
@@ -866,7 +866,7 @@ will return
 
 *Value: `Regexp`* - Regular Expression to be tested.
 
-This option will test if string matches against given regular expression or not.
+This option will test if string matches against the given regular expression or not.
 
 ```ruby
 schema :hero do
@@ -877,7 +877,7 @@ hero = Hero.new(name: "Mark 3")
 validator.validate(hero_schema, hero) # => Result.errors
 ```
 
-will return
+will return:
 
 ```ruby
 {
@@ -889,7 +889,7 @@ will return
 
 *Value: `Number`* - Apply to both `string` and `number` attribute types.
 
-This option sets a minimum and maximum value for attribute.
+This option sets a minimum and maximum value for the attribute.
 
 ```ruby
 schema :hero do
@@ -900,7 +900,7 @@ hero = Hero.new(power: 200)
 validator.validate(hero_schema, hero) # => Result.errors
 ```
 
-will return
+will return:
 
 ```ruby
 {
@@ -912,7 +912,7 @@ will return
 
 *Value: `Array`* - Set of valid values.
 
-This option will test if value is in the specified list or not.
+This option will test if the value is in the specified list or not.
 
 ```ruby
 schema :hero do
@@ -923,7 +923,7 @@ hero = Hero.new(status: "Mad")
 validator.validate(hero_schema, hero) # => Result.errors
 ```
 
-will return
+will return:
 
 ```ruby
 {
@@ -931,12 +931,12 @@ will return
 }
 ```
 
-### <a name="validator-condition"></a> Conditional Validation
+### <a name="validator-condition"></a> Conditional validation
 #### <a name="validator-options-if-unless"></a> `:if/:unless`
 
 *Possible value: `Symbol`/`Proc`*
 
-This enables us to validate attribute based on `if/unless` conditions.
+This enables us to validate the attribute based on `if/unless` conditions.
 
 ```ruby
 schema :hero do
@@ -953,7 +953,7 @@ hero = Hero.new(name: "Nick Fury", is_agent: true)
 validator.validate(hero_schema, hero) # Result.errors =>
 ```
 
-will produce (because `is_agent` is `true`)
+will produce (because `is_agent` is `true`):
 
 ```ruby
 {
@@ -961,11 +961,11 @@ will produce (because `is_agent` is `true`)
 }
 ```
 
-### Custom Validator
+### Custom validator
 
-Since the validator is based on `ActiveModel::Validations`. This make it easy to add a new custom validator.
+Since the validator is based on `ActiveModel::Validations`, it is easy to add a new custom validator.
 
-In the following example. We create a simple password validator and register it to the password attribute.
+In the following example, we create a simple password validator and register it to the password attribute.
 
 ```ruby
 # Defines custom validator
@@ -982,11 +982,11 @@ schema :user do
 end
 ```
 
-### Custom Normalizer
+### Custom normalizer
 
-It's possible to change the logic for normalizing data before passing it to the validator. For example, you might want to normalize `boolean` value before validating it.
+It is possible to change the logic for normalizing data before passing it to the validator. For example, you might want to normalize the `boolean` value before validating it.
 
-Here, we want to normalize string such as `on` or `1` to boolean `true` first.
+Here, we want to normalize a string such as `on` or `1` to boolean `true`.
 
 ```ruby
 # Overrides default normalizer
@@ -999,7 +999,7 @@ end
 hero = Hero.new(berserk: 1)
 validator.validate(hero_schema, hero) # Result.value
 ```
-will pass the validation and `Result.value`'ll contain normalized value
+will pass the validation and `Result.value` will contain the normalized value:
 
 ```ruby
 {
@@ -1009,9 +1009,9 @@ will pass the validation and `Result.value`'ll contain normalized value
 
 ### Validating `Endpoint`
 
-All examples above also apply to endpoint's parameters validation.
+All the preceding examples also apply to validation of endpoint parameters.
 
-Because the params is part of `Endpoint` and it's non-trivial task to retrieve endpoint's method's params. So, the `Endpoint` provides some helper methods to validate the data.
+As the params are part of the `Endpoint` and it is non-trivial to retrieve the params of the endpoint's methods, the `Endpoint` provides some helper methods to validate the data.
 
 ```ruby
 resolver = Bluepine::Resolver.new do
@@ -1028,14 +1028,14 @@ resolver.endpoint(:heroes).method(:create, resolver: resolver).validate(payload)
 
 ## Generating Open API (v3)
 
-Once we have all schemas/endpoints defined and registered to the `Resolver`. We can simply pass it to the generator as follows.
+Once we have all schemas/endpoints defined and registered to the `Resolver`, we can pass it to the generator as follows.
 
 ```ruby
 generator = Bluepine::Generators::OpenAPI::Generator.new(resolver, options)
 generator.generate # =>
 ```
 
-will output Open API (v3) specs
+will output Open API (v3) specs:
 
 *excerpt from the full result*
 ```js
@@ -1099,7 +1099,7 @@ will output Open API (v3) specs
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/omise/bluepine. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on [GitHub](https://github.com/omise/bluepine). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
